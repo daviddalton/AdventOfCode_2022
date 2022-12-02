@@ -27,9 +27,6 @@ const fs = __importStar(require("fs"));
 const inputFile = process.argv[2];
 const rawData = fs.readFileSync(inputFile || 'inputTest.txt', 'utf8');
 const data = rawData.split('\n\n');
-let max2 = 0;
-let max3 = 0;
-let max = 0;
 let elves = [];
 data.forEach(elf => {
     const foodItems = elf.split("\n");
@@ -39,6 +36,8 @@ data.forEach(elf => {
     });
     elves.push(total);
 });
+let max = Math.max(...elves);
 let sorted = elves.sort((n1, n2) => n2 - n1);
 console.log(sorted[0] + sorted[1] + sorted[2]);
+console.log(max);
 //# sourceMappingURL=index.js.map
