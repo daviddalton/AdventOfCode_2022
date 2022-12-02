@@ -27,14 +27,18 @@ const fs = __importStar(require("fs"));
 const inputFile = process.argv[2];
 const rawData = fs.readFileSync(inputFile || 'inputTest.txt', 'utf8');
 const data = rawData.split('\n\n');
-const summed = data.map(elf => {
-    const calories = elf.split('\n');
-    let sum = 0;
-    for (let i = 0; i < calories.length; i++) {
-        sum += +calories[i];
-    }
-    return sum;
+let max2 = 0;
+let max3 = 0;
+let max = 0;
+let elves = [];
+data.forEach(elf => {
+    const foodItems = elf.split("\n");
+    let total = 0;
+    foodItems.forEach(_ => {
+        total = total + Number.parseInt(_);
+    });
+    elves.push(total);
 });
-summed.sort((a, b) => b - a);
-console.log(summed[0] + summed[1] + summed[2]);
+let sorted = elves.sort((n1, n2) => n2 - n1);
+console.log(sorted[0] + sorted[1] + sorted[2]);
 //# sourceMappingURL=index.js.map
