@@ -15,9 +15,11 @@ data.forEach(_ => {
     const rightLower = Number.parseInt(right.split("-")[0]);
     const rightHigher = Number.parseInt(right.split("-")[1]);
 
-    if (leftLower >= rightLower && leftHigher <= rightHigher) {
+    if (leftLower >= rightLower && leftLower <= rightHigher) {
         total++
-    } else if(rightLower >= leftLower && rightHigher <= leftHigher) {
+    } else if (leftHigher >= rightLower && leftHigher <= rightHigher) {
+        total++
+    } else if (leftLower < rightLower && leftHigher > rightHigher) {
         total++
     }
 })
