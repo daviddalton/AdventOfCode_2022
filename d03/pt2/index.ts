@@ -3,7 +3,6 @@ import * as fs from 'fs';
 const inputFile = process.argv[2];
 const rawData: string = fs.readFileSync(inputFile || 'inputTest.txt', 'utf8');
 const data: string[] = rawData.split('\n');
-let results: string[] = [];
 
 const letterMap = new Map<string, number>(
     [
@@ -62,33 +61,26 @@ const letterMap = new Map<string, number>(
     ]
 )
 
-data.forEach(rucksack => {
-    let go: boolean = true;
-    const length = rucksack.length
-    const compartment1 = rucksack.slice(0, length/2)
-    const compartment2 = rucksack.slice(length/2, length)
-    // console.log(rucksack)
+let total = 0;
 
-    for (let i = 0; i < compartment1.length; i++) {
+for (let i = 0; i < data.length; i = i + 3) {
+    let first = data[i];
+    let second = data[i + 1];
+    let third = data[i + 2];
+    let go = true;
+
+    for (let j = 0; j < first.length; j++) {
         if (go) {
-            for (let j = 0; j < compartment2.length; j++) {
-                if (go) {
-                    if (compartment1[i] === compartment2[j]) {
-                        results.push(compartment1[i]);
-                        go = false;
-                    }
+            let letter = first[j];
+            if (second.includes(letter) && third.includes(letter)) {
+                let value = letterMap.get(letter);
+                if (value != undefined) {
+                    total += value;
+                    go = false;
                 }
             }
         }
     }
-})
-
-let total: number = 0;
-results.forEach(letter => {
-    let value = letterMap.get(letter);
-    if (value != undefined) {
-        total = total + value;
-    }
-})
+}
 
 console.log(total)
