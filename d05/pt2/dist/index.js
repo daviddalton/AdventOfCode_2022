@@ -45,11 +45,11 @@ shipyard.forEach((_, index) => {
 });
 instructions.forEach(_ => {
     const numToMove = Number.parseInt(_.replaceAll(" ", "").split(RegExp("move(.*?)from"))[1]);
-    const from = Number.parseInt(_.replaceAll(" ", "").split(RegExp("from(.*?)to"))[1]);
-    const to = Number.parseInt(_.replaceAll(" ", "").split(RegExp("to(.*?)"))[2]);
+    const from = Number.parseInt(_.replaceAll(" ", "").split(RegExp("from(.*?)to"))[1]) - 1;
+    const to = Number.parseInt(_.replaceAll(" ", "").split(RegExp("to(.*?)"))[2]) - 1;
     for (let i = 0; i < numToMove; i++) {
-        shipyardTwoDim[to - 1].push(shipyardTwoDim[from - 1][shipyardTwoDim[from - 1].length - 1]);
-        shipyardTwoDim[from - 1].splice(-1);
+        shipyardTwoDim[to].push(shipyardTwoDim[from][shipyardTwoDim[from].length - numToMove + i]);
+        shipyardTwoDim[from].splice(shipyardTwoDim[from].length - numToMove + i, 1);
     }
 });
 let result = "";
