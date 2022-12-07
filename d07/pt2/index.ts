@@ -38,10 +38,16 @@ data.forEach(_ => {
     prevCommand = _
 })
 
+let totalLeft = 70000000 - directories.get("/main")!
+let totalToBeRemoved = 30000000 - totalLeft
+let candidates: Number[] = []
 directories.forEach((value: number, key: string) => {
-    if (value <= 100000) {
-        total += value
+    if (value >= totalToBeRemoved) {
+        candidates.push(value)
     }
 });
 
-console.log(total)
+// @ts-ignore
+let sorted = candidates.sort((n1,n2) => n1 - n2)
+
+console.log(sorted[0])

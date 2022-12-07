@@ -45,9 +45,7 @@ data.forEach(_ => {
         parentDir.set(currentPath + "/" + _.split(" ")[1], currentPath);
     }
     else if (_.includes("$ cd")) {
-        //we must be changing directories
         if (_.split("cd")[1].trim() === "..") {
-            // console.log("Current Command: " + _)
             if (parentDir.get(currentPath)) {
                 currentPath = parentDir.get(currentPath);
             }
@@ -64,17 +62,18 @@ data.forEach(_ => {
             tempDir = parentDir.get(tempDir);
         }
     }
-    // console.log("Prev Command: " + prevCommand)
-    // console.log(directories)
-    // console.log(parentDir)
-    console.log(_);
-    console.log(currentPath);
     prevCommand = _;
 });
+let totalLeft = 70000000 - directories.get("/main");
+let totalToBeRemoved = 30000000 - totalLeft;
+console.log(totalToBeRemoved);
+let candidates = [];
 directories.forEach((value, key) => {
-    if (value <= 100000) {
-        total += value;
+    if (value >= totalToBeRemoved) {
+        candidates.push(value);
     }
 });
-console.log(total);
+// @ts-ignore
+let sorted = candidates.sort((n1, n2) => n1 - n2);
+console.log(sorted[0]);
 //# sourceMappingURL=index.js.map
