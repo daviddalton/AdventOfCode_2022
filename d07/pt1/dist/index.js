@@ -45,9 +45,7 @@ data.forEach(_ => {
         parentDir.set(currentPath + "/" + _.split(" ")[1], currentPath);
     }
     else if (_.includes("$ cd")) {
-        //we must be changing directories
         if (_.split("cd")[1].trim() === "..") {
-            // console.log("Current Command: " + _)
             if (parentDir.get(currentPath)) {
                 currentPath = parentDir.get(currentPath);
             }
@@ -64,11 +62,6 @@ data.forEach(_ => {
             tempDir = parentDir.get(tempDir);
         }
     }
-    // console.log("Prev Command: " + prevCommand)
-    // console.log(directories)
-    // console.log(parentDir)
-    console.log(_);
-    console.log(currentPath);
     prevCommand = _;
 });
 directories.forEach((value, key) => {
