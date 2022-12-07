@@ -27,4 +27,54 @@ const fs = __importStar(require("fs"));
 const inputFile = process.argv[2];
 const rawData = fs.readFileSync(inputFile || 'inputTest.txt', 'utf8');
 const data = rawData.split('\n');
+let total = 0;
+let prevCommand = "";
+let currentPath = "";
+let directories = new Map();
+let parentDir = new Map();
+data.forEach(_ => {
+    if (_.includes("$ cd /")) {
+        directories.set("/main", 0);
+        currentPath = "/main";
+    }
+    else if (_.includes("$ ls")) {
+        //do nothing
+    }
+    else if (_.includes("dir")) {
+        directories.set(currentPath + "/" + _.split(" ")[1], 0);
+        parentDir.set(currentPath + "/" + _.split(" ")[1], currentPath);
+    }
+    else if (_.includes("$ cd")) {
+        //we must be changing directories
+        if (_.split("cd")[1].trim() === "..") {
+            // console.log("Current Command: " + _)
+            if (parentDir.get(currentPath)) {
+                currentPath = parentDir.get(currentPath);
+            }
+        }
+        else {
+            currentPath = currentPath + "/" + _.split(" cd ")[1].trim();
+        }
+    }
+    else {
+        directories.set(currentPath, directories.get(currentPath) + Number.parseInt(_.split(" ")[0]));
+        let tempDir = currentPath;
+        while (parentDir.get(tempDir)) {
+            directories.set(parentDir.get(tempDir), directories.get(parentDir.get(tempDir)) + Number.parseInt(_.split(" ")[0]));
+            tempDir = parentDir.get(tempDir);
+        }
+    }
+    // console.log("Prev Command: " + prevCommand)
+    // console.log(directories)
+    // console.log(parentDir)
+    console.log(_);
+    console.log(currentPath);
+    prevCommand = _;
+});
+directories.forEach((value, key) => {
+    if (value <= 100000) {
+        total += value;
+    }
+});
+console.log(total);
 //# sourceMappingURL=index.js.map
