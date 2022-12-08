@@ -9,7 +9,6 @@ for (let i = 1; i < data.length - 1; i++) {
     let row = data[i]
     row.split("").forEach((tree, index) => {
         if (index != 0 && index != row.length - 1) {
-            //move to the left until you are out
             let tallestLeft = true
             for (let j = index; j > 0; j--) {
                 if (tree <= row[j - 1]) {
@@ -17,7 +16,6 @@ for (let i = 1; i < data.length - 1; i++) {
                     break
                 }
             }
-            //move to the right until you are out
             let tallestRight = true
             for (let j = index; j < row.length ; j++) {
                 if (tree <= row[j + 1]) {
