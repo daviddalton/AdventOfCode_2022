@@ -60,10 +60,6 @@ data.forEach(_ => {
             tailX--;
             tailY++;
         }
-        else if (headX - tailX == 1 && headY - tailY < -1) {
-            tailX--;
-            tailY++;
-        }
         else if (headX - tailX > 1) {
             tailX++;
         }
